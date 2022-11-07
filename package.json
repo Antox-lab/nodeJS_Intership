@@ -4,7 +4,9 @@
   "description": "HW for week0",
   "main": "node.js",
   "scripts": {
-    "start": "node week0/node.js"
+    "start": "node week0/node.js",
+    "prod": "ENV=PRODUCTION node week0/node.js",
+    "dev": "ENV=DEV node week0/node.js"
   },
   "author": "",
   "license": "ISC",
