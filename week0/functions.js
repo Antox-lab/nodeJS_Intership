@@ -16,8 +16,7 @@ console.log('-------------------------');
  */
 
 function countSum () {
-  sum = Object.values(arguments).reduce((prev, curr) => prev + curr);
-  return sum;
+  return Object.values(arguments).reduce((prev, curr) => prev + curr);
 }
 
 console.log(countSum(4, 5, 23));
@@ -47,8 +46,7 @@ console.log('-------------------------');
  */
 
 function getRandom (start, end) {
-  result = Math.trunc(Math.random() * (end - start) + start);
-  return result;
+  return Math.trunc(Math.random() * (end - start) + start);
 }
 
 console.log(getRandom(0, 10));

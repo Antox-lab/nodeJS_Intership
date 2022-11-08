@@ -1,12 +1,23 @@
 const myArray = [1, 10, true, 3, 6, 'dfgdfgfdg', 8, {1: 'sdf', 2: 'ere'}];
 
 /**
- * 1. Log to console 3 and '{}'
+ * 1. Log 3 and 6 elements from myArray to console
  * Please, use more than on solution
  */
 
 console.log(`3: ${myArray[2]}`);
-console.log(`{}: ${myArray}`);
+console.log(`6: ${myArray[5]}`);
+
+//  ------  Second variant  ------
+// console.log(`3: ${myArray.at(2)}`);
+// console.log(`6: ${myArray.at(5)}`);
+
+//  ------  Third variant  ------
+// myArray.forEach((item, index) => {
+//   if (index == 2 || index == 5) {
+//     console.log(`${index + 1}: ${item}`);
+//   }
+// })
 
 /**
  *  2. Log type of each element
@@ -56,9 +67,9 @@ console.log({
  * Should return another Array
  */
 
-const multiplied = myArray.map(
-  item => (typeof item === 'number' ? item * 2 : item)
-);
+const multiplied = myArray.filter(
+  item => (typeof item === 'number')
+).map(item => item *2);
 
 console.log({
   multiplied
@@ -83,8 +94,8 @@ console.log({
  * 8. Sort array in ascending and descending order
  */
 
-const asc = myArray.concat().sort();
-const desc = myArray.concat().sort().reverse();
+const asc = myArray.concat().filter(item => typeof item === 'number').sort((a, b) => a - b);
+const desc = myArray.concat().filter(item => typeof item === 'number').sort((a, b) => b - a);
 
 console.log({
   asc,

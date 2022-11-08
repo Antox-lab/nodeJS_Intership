@@ -8,8 +8,10 @@ const fetch = require('cross-fetch');
 switch (process.env.ENV) {
   default: {
     getFetch('https://jsonplaceholder.typicode.com/users').then(data =>
-      fs.writeFileSync('week0/users.json', JSON.stringify(data))
-    );
+      fs.writeFile('week0/users.json', JSON.stringify(data), function (err) {
+        if (err) new Error();
+      })
+    ).catch(err => console.log(err));
     break;
   }
 
@@ -22,14 +24,18 @@ switch (process.env.ENV) {
 
   case 'PRODUCTION': {
     getFetch('https://jsonplaceholder.typicode.com/todos').then(data =>
-      fs.writeFileSync('week0/todos.json', JSON.stringify(data))
-    );
+      fs.writeFile('week0/todos.json', JSON.stringify(data), function (err) {
+        if (err) new Error();
+      })
+    ).catch(err => console.log(err));
     break;
   }
   case 'DEV': {
     getFetch('https://jsonplaceholder.typicode.com/albums').then(data =>
-      fs.writeFileSync('week0/albums.json', JSON.stringify(data))
-    );
+      fs.writeFile('week0/albums.json', JSON.stringify(data), function (err) {
+        if (err) new Error();
+      })
+    ).catch(err => console.log(err));
     break;
   }
 }

@@ -52,9 +52,12 @@ console.log('-------------------------');
  * Please, use more than one solution
  */
 
-const copiedInvoice = Object.assign({}, invoice);
+const copiedInvoice = {...invoice};
 
 //  ------  Second variant  ------
+// const copiedInvoice = Object.assign({}, invoice);
+
+//  ------  Third variant  ------
 // let copiedInvoice = {};
 // for (const key in invoice) {
 //   copiedInvoice[key] = invoice[key];
