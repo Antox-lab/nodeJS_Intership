@@ -1,7 +1,9 @@
+/* eslint-disable no-use-before-define */
+/* eslint-disable no-plusplus */
 const readline = require('readline');
 const { stdin: input, stdout: output } = require('process');
 
-let usersList = ['MAX', 'ANTON', 'DU', 'ICH'];
+const usersList = ['MAX', 'ANTON', 'DU', 'ICH'];
 
 function addUser(userName) {
     usersList.push(userName);
@@ -39,24 +41,25 @@ function getUserIndex(userName) {
             return i;
         }
     }
+
     return usersList.length;
 }
 
 function getReadLine(message, func, update) {
     console.log(message);
     const rl = readline.createInterface({ input, output });
+
     rl.question('User name is: ', (userName) => {
         if (update) {
             rl.question('New name is: ', (newName) => {
                 func(userName, newName);
                 rl.close();
-            })
+            });
         } else {
             func(userName);
             rl.close();
         }
     });
-
 }
 
 module.exports = {
@@ -64,5 +67,5 @@ module.exports = {
     findUser,
     updateUser,
     deleteUser,
-    getReadLine
-}
+    getReadLine,
+};
