@@ -1,40 +1,81 @@
-const userList = require('../../data/index');
+const jwt = require('jsonwebtoken');
 
-function addUser() {
-    userList.getReadLine('--- ADDING USER ---', userList.addUser);
+const usersList = [];
 
-    return {
-        message: 'User is added!',
-    };
+const TOKEN_SECRET = 'sdgasdkjgsdjcndsafykgcsdayhfkgdhasf';
+
+function getUsersList() {
+    return usersList;
 }
 
-function findUser() {
-    userList.getReadLine('--- FINDING USER ---', userList.findUser);
-
-    return {
-        message: 'User is finded!',
+function addUser(userName, userAge) {
+    const newUser = {
+        id: Date.now(),
+        name: userName,
+        age: userAge,
     };
+
+    usersList.push(newUser);
+
+    return newUser;
 }
 
-function updateUser() {
-    userList.getReadLine('--- UPDATING USER ---', userList.updateUser, true);
-
-    return {
-        message: 'User is updated!',
-    };
+function findUserByName(userName) {
+    return usersList.filter((item) => item.name === userName);
 }
 
-function deleteUser() {
-    userList.getReadLine('--- DELETING USER ---', userList.deleteUser);
+function findUserById(userId) {
+    return usersList.filter((item) => item.id.toString() === userId);
+}
+
+function updateUser(userId, userName, userAge) {
+    usersList.forEach((item) => {
+        if (item.id.toString() === userId) {
+            // eslint-disable-next-line no-param-reassign
+            item.name = userName;
+
+            // eslint-disable-next-line no-param-reassign
+            item.age = userAge;
+        }
+    });
+
+    return usersList;
+}
+
+function deleteUser(userId) {
+    const userIndex = usersList.findIndex((item) => item.id.toString() === userId);
+
+    if (userIndex > -1) {
+        usersList.splice(userIndex, 1);
+    }
+
+    return usersList;
+}
+
+function createToken(userId) {
+    const isUser = usersList.find((item) => item.id.toString() === userId);
+
+    if (isUser) {
+        return jwt.sign(
+            {
+                id: userId,
+            },
+            TOKEN_SECRET,
+        );
+    }
 
     return {
-        message: 'User is deleted!',
+        message: `For id:${userId} user is not found`,
     };
 }
 
 module.exports = {
+    getUsersList,
     addUser,
-    findUser,
+    findUserByName,
+    findUserById,
     updateUser,
     deleteUser,
+    createToken,
+    TOKEN_SECRET,
 };
