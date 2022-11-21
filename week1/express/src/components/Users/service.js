@@ -52,7 +52,7 @@ function deleteUser(userId) {
     return usersList;
 }
 
-function createToken(userId) {
+function authUser(userId) {
     const isUser = usersList.find((item) => item.id.toString() === userId);
 
     if (isUser) {
@@ -76,6 +76,6 @@ module.exports = {
     findUserById,
     updateUser,
     deleteUser,
-    createToken,
+    authUser,
     TOKEN_SECRET,
 };

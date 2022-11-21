@@ -90,9 +90,9 @@ async function deleteUser(req, res) {
     }
 }
 
-async function createToken(req, res) {
+async function authUser(req, res) {
     try {
-        const user = await UsersService.createToken(req.body.id);
+        const user = await UsersService.authUser(req.body.id);
 
         return res.status(200).json({
             data: user,
@@ -105,7 +105,7 @@ async function createToken(req, res) {
     }
 }
 
-function verifyToken(req, res) {
+function verifyUser(req, res) {
     return res.status(200).json({
         message: `User with id ${req.user.id} is authorized!`,
     });
@@ -118,6 +118,6 @@ module.exports = {
     findUserId,
     updateUser,
     deleteUser,
-    createToken,
-    verifyToken,
+    authUser,
+    verifyUser,
 };

@@ -7,18 +7,18 @@ const router = Router();
 
 router.get('/', UsersComponent.getUsers);
 
-router.post('/add', middlewareMethods.middleware(schema.add), UsersComponent.addUser);
+router.post('/add', middlewareMethods.validation(schema.add), UsersComponent.addUser);
 
-router.post('/find', middlewareMethods.middleware(schema.find), UsersComponent.findUser);
+router.post('/find', middlewareMethods.validation(schema.find), UsersComponent.findUser);
 
-router.post('/findId', middlewareMethods.middleware(schema.findId), UsersComponent.findUserId);
+router.post('/findId', middlewareMethods.validation(schema.findId), UsersComponent.findUserId);
 
-router.patch('/update', middlewareMethods.middleware(schema.update), UsersComponent.updateUser);
+router.patch('/update', middlewareMethods.validation(schema.update), UsersComponent.updateUser);
 
-router.delete('/delete', middlewareMethods.middleware(schema.findId), UsersComponent.deleteUser);
+router.delete('/delete', middlewareMethods.validation(schema.findId), UsersComponent.deleteUser);
 
-router.post('/sign-in', UsersComponent.createToken);
+router.post('/sign-in', middlewareMethods.validation(schema.findId), UsersComponent.authUser);
 
-router.get('/account', middlewareMethods.autorization, UsersComponent.verifyToken);
+router.get('/account', middlewareMethods.autorization, UsersComponent.verifyUser);
 
 module.exports = router;
