@@ -1,4 +1,7 @@
 {
     "watch": ["src"],
-    "exec": "node ./src/server/index.js"
+    "exec": "node ./src/server/index.js",
+    "env": {
+        "TOKEN": "adshkfjsndufcbcgwbxegxnddgufuysdgxfkjesgfn"
+    }
 }

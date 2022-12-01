@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const usersList = [];
 
-const TOKEN_SECRET = 'sdgasdkjgsdjcndsafykgcsdayhfkgdhasf';
+const TOKEN_SECRET = process.env.TOKEN;
 
 function getUsersList() {
     return usersList;
@@ -77,5 +77,4 @@ module.exports = {
     updateUser,
     deleteUser,
     authUser,
-    TOKEN_SECRET,
 };
