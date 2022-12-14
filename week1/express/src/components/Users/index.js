@@ -17,7 +17,12 @@ async function getUsers(req, res) {
 
 async function addUser(req, res) {
     try {
-        const user = await UsersService.addUser(req.body.name, req.body.age);
+        const user = UsersService.addUser(
+            req.body.firstName,
+            req.body.lastName,
+            req.body.email,
+            req.body.password,
+        );
 
         return res.status(201).json({
             data: user,
@@ -32,7 +37,7 @@ async function addUser(req, res) {
 
 async function findUser(req, res) {
     try {
-        const user = await UsersService.findUserByName(req.body.name);
+        const user = await UsersService.findUserByName(req.body.firstName);
 
         return res.status(201).json({
             data: user,
@@ -62,7 +67,13 @@ async function findUserId(req, res) {
 
 async function updateUser(req, res) {
     try {
-        const user = await UsersService.updateUser(req.body.id, req.body.name, req.body.age);
+        const user = await UsersService.updateUser(
+            req.body.id,
+            req.body.firstName,
+            req.body.lastName,
+            req.body.email,
+            req.body.password,
+        );
 
         return res.status(201).json({
             data: user,

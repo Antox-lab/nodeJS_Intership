@@ -1,59 +1,63 @@
 const jwt = require('jsonwebtoken');
-
-const usersList = [];
+const bcrypt = require('bcrypt');
+const modelDB = require('./model');
 
 const TOKEN_SECRET = process.env.TOKEN;
 
+const User = modelDB;
+
 function getUsersList() {
-    return usersList;
+    return User.find({});
 }
 
-function addUser(userName, userAge) {
-    const newUser = {
-        id: Date.now(),
-        name: userName,
-        age: userAge,
-    };
+function addUser(firstName, lastName, email, password) {
+    const user = new User({
+        firstName,
+        lastName,
+        email,
+        password,
+    });
 
-    usersList.push(newUser);
+    user.save()
+        .catch((err) => console.log('Save error: ', err));
 
-    return newUser;
+    return user;
 }
 
-function findUserByName(userName) {
-    return usersList.filter((item) => item.name === userName);
+function findUserByName(firstName) {
+    return User.find({ firstName });
 }
 
 function findUserById(userId) {
-    return usersList.filter((item) => item.id.toString() === userId);
+    return User.find({ _id: userId });
 }
 
-function updateUser(userId, userName, userAge) {
-    usersList.forEach((item) => {
-        if (item.id.toString() === userId) {
-            // eslint-disable-next-line no-param-reassign
-            item.name = userName;
+function updateUser(userId, firstName, lastName, email, password) {
+    const updatedUser = User.findByIdAndUpdate(
+        {
+            _id: userId,
+        },
+        {
+            firstName,
+            lastName,
+            email,
+            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+        },
+        {
+            new: true,
+        },
+    );
 
-            // eslint-disable-next-line no-param-reassign
-            item.age = userAge;
-        }
-    });
-
-    return usersList;
+    return updatedUser;
 }
 
 function deleteUser(userId) {
-    const userIndex = usersList.findIndex((item) => item.id.toString() === userId);
-
-    if (userIndex > -1) {
-        usersList.splice(userIndex, 1);
-    }
-
-    return usersList;
+    return User.find({ _id: userId }).remove()
+        .catch((err) => console.log('Deleting error: ', err));
 }
 
 function authUser(userId) {
-    const isUser = usersList.find((item) => item.id.toString() === userId);
+    const isUser = User.find({ _id: userId });
 
     if (isUser) {
         return jwt.sign(

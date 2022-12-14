@@ -2,19 +2,23 @@ const joi = require('joi');
 
 const shema = {
     add: joi.object().keys({
-        name: joi.string().required(),
-        age: joi.number().min(16).max(65).required(),
+        firstName: joi.string().min(3).max(20).required(),
+        lastName: joi.string(),
+        email: joi.string().required(),
+        password: joi.string().required(),
     }),
     find: joi.object().keys({
-        name: joi.string().required(),
+        firstName: joi.string().required(),
     }),
     findId: joi.object().keys({
-        id: joi.number().required(),
+        id: joi.string().required(),
     }),
     update: joi.object().keys({
-        id: joi.number().required(),
-        name: joi.string(),
-        age: joi.number().min(16).max(65),
+        id: joi.string().required(),
+        firstName: joi.string().min(3).max(20).required(),
+        lastName: joi.string(),
+        email: joi.string(),
+        password: joi.string(),
     }),
 };
 
