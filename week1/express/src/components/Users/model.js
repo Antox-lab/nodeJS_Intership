@@ -25,7 +25,7 @@ const schemaDB = new Schema({
     },
 });
 
-schemaDB.pre(['save', 'findOneAndUpdate'], function (next) {
+schemaDB.pre('save', function (next) {
     if (this.password) {
         this.password = bcrypt.hashSync(this.password, bcrypt.genSaltSync(10));
     }
