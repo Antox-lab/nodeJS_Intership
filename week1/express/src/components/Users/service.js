@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 const modelDB = require('./model');
 
 const TOKEN_SECRET = process.env.TOKEN;
@@ -28,20 +27,20 @@ function findUserByName(firstName) {
     return User.find({ firstName });
 }
 
-function findUserById(userId) {
-    return User.find({ _id: userId });
+function findUserById(_id) {
+    return User.find({ _id });
 }
 
-function updateUser(userId, firstName, lastName, email, password) {
-    const updatedUser = User.findByIdAndUpdate(
+function updateUser(_id, firstName, lastName, email, password) {
+    const updatedUser = User.findOneAndUpdate(
         {
-            _id: userId,
+            _id,
         },
         {
             firstName,
             lastName,
             email,
-            password: bcrypt.hashSync(password, bcrypt.genSaltSync(10)),
+            password,
         },
         {
             new: true,
@@ -51,8 +50,8 @@ function updateUser(userId, firstName, lastName, email, password) {
     return updatedUser;
 }
 
-function deleteUser(userId) {
-    return User.find({ _id: userId }).remove()
+function deleteUser(_id) {
+    return User.find({ _id }).remove()
         .catch((err) => console.log('Deleting error: ', err));
 }
 
