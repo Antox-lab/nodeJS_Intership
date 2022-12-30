@@ -5,9 +5,6 @@ async function getTasks(req, res) {
         const task = await TasksService.getTasks(req.query.page);
         const totalTasks = await TasksService.getDocumentsCount();
 
-        console.log(task);
-        console.log(totalTasks);
-
         return res.status(200).json({
             code: 200,
             data: {

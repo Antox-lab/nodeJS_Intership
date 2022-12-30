@@ -1,0 +1,271 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Node JS Internship",
+        "description": "REST API swagger documentation",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "host": "localhost:3000",
+    "basePath": "/v1",
+    "tags": [
+        {
+        "name": "Tasks",
+        "description": "Methods for tasks rout"
+    },
+    {
+        "name": "TasksAll",
+        "description": "Methods for tasks/all rout"
+    },
+    {
+        "name": "TasksDelete",
+        "description": "Methods for tasks/delete rout"
+    }
+],
+    "securityDefinitions": {
+        "api_key": {
+            "type": "apiKey",
+            "name": "api_key",
+            "in": "header",
+            "description": "Requests should pass an api_key header."
+        }
+    },
+    "security": {
+        "api_key": []
+    },
+    "paths": {
+        "/tasks": {
+            "get": {
+                "tags": ["Tasks"],
+                "summary": "Get list of tasks",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "require": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Tasks"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Tasks"],
+                "summary": "Create new task",
+                "parameters": [
+                    {
+                        "name": "Body fields:",
+                        "in": "body",
+                        "description": "Fields for body request",
+                        "schema": {
+                            "$ref": "#/definitions/Tasks"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Tocken",
+                        "require": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Tasks"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/{id}": {
+            "patch": {
+                "tags": ["Tasks"],
+                "summary": "Update task by tasks id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Value of tasks id",
+                        "schema": {
+                            "properties": {
+                                "_id": {
+                                "type": "string",
+                                "format": "ObjectId",
+                                "require": true
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "estimatedTime:",
+                        "in": "body",
+                        "description": "Value of estimatedTime",
+                        "schema": {
+                            "$ref": "#/definitions/TaskUpdate"
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Tocken",
+                        "require": true,
+                        "type": "string"
+                    }
+                ],
+                "schema": {
+                            "$ref": "#/definitions/TaskUpdate"
+                        },
+                        "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Tasks"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/all": {
+                "get": {
+                "tags": ["TasksAll"],
+                "summary": "Get list tasks for user",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "body",
+                        "description": "Value user id",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "format": "ObjectId",
+                                    "require": true
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                                        "$ref": "#/definitions/TasksAll"
+                        }
+                    }
+                }
+            }
+        },
+        "/tasks/delete": {
+            "delete": {
+                "tags": ["TasksDelete"],
+                "summary": "Delete task by id",
+                "parameters": [
+                    {
+                        "name": "_id",
+                        "in": "body",
+                        "description": "Value tasks id",
+                        "schema": {
+                            "properties": {
+                                "id": {
+                                    "type": "string",
+                                    "format": "ObjectId"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "description": "Tocken",
+                        "require": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TaskDelete"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Tasks": {
+            "required": ["assignee", "title", "estimatedTime", "createdBy"],
+            "properties": {
+                "assignee": {
+                    "type": "string",
+                    "format": "ObjectId"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "estimatedTime": {
+                    "type": "integer"
+                },
+                "createdBy": {
+                    "type": "string"
+                }
+            }
+        },
+        "TasksAll": {
+            "properties": {
+                                "tasks": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/Tasks"
+                                    }
+                                },
+                                "name": {
+                                    "type": "string"
+                                },
+                                "totalTasks": {
+                                    "type": "integer"
+                                },
+                                "totalEstimation": {
+                                    "type": "integer"
+                                }
+                            
+            }
+        },
+        "TaskUpdate": {
+            "properties": {
+                "estimatedTime": {
+                    "type": "integer",
+                    "require": true
+                }
+            }
+        },
+        "TaskDelete": {
+            "properties": {
+                "acknowledged": {
+                    "type": "boolean"
+                },
+                "deletedCount": {
+                    "type": "integer"
+                }
+            }
+        }
+    },
+    "schemes": ["http"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"]
+}

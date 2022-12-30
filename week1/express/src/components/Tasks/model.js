@@ -21,6 +21,9 @@ const schemaDB = new Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+    },
 });
 
 module.exports = connectDB.model('Tasks', schemaDB);

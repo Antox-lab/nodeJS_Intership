@@ -8,9 +8,9 @@ const ITEMS_LIMIT = 5;
 
 function getTasks(pageNumber) {
     return Tasks.find({})
+        .sort({ estimatedTime: -1 })
         .skip(pageNumber * ITEMS_LIMIT)
-        .limit(ITEMS_LIMIT)
-        .sort({ estimatedTime: -1 });
+        .limit(ITEMS_LIMIT);
 }
 
 function getTasksAll(id) {
@@ -109,8 +109,6 @@ function deleteTask(_id) {
 }
 
 function getDocumentsCount() {
-    console.log(Tasks.estimatedDocumentCount({}, (err, c) => c));
-
     return Tasks.estimatedDocumentCount({});
 }
 
